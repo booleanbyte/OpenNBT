@@ -100,7 +100,7 @@ public class ShortArrayTag extends Tag {
     @Override
     public void destringify(StringifiedNBTReader in) throws IOException {
         String s = in.readUntil(true, ']');
-        String[] valueStrings = s.substring(s.indexOf(';') + 1, s.length() - 1).replaceAll(" ", "").split(",");
+        String[] valueStrings = s.substring(s.indexOf(';') + 1, s.length() - 1).replaceAll("[sS\\s]", "").split(",");
         value = new short[valueStrings.length];
         for(int i = 0; i < value.length; i++) {
             value[i] = Short.parseShort(valueStrings[i]);
@@ -112,6 +112,7 @@ public class ShortArrayTag extends Tag {
         StringBuilder sb = new StringBuilder("[S; ");
         for(short b : value) {
             sb.append(b);
+            sb.append('s');
             sb.append(',');
             sb.append(' ');
         }

@@ -101,7 +101,7 @@ public class FloatArrayTag extends Tag {
     @Override
     public void destringify(StringifiedNBTReader in) throws IOException {
         String s = in.readUntil(true, ']');
-        String[] valueStrings = s.substring(s.indexOf(';') + 1, s.length() - 1).replaceAll(" ", "").split(",");
+        String[] valueStrings = s.substring(s.indexOf(';') + 1, s.length() - 1).replaceAll("[fF\\s]", "").split(",");
         value = new float[valueStrings.length];
         for(int i = 0; i < value.length; i++) {
             value[i] = Float.parseFloat(valueStrings[i]);
@@ -114,6 +114,7 @@ public class FloatArrayTag extends Tag {
         DecimalFormat df = new DecimalFormat("#.#");
         for(float b : value) {
             sb.append(df.format(b));
+            sb.append('f');
             sb.append(',');
             sb.append(' ');
         }

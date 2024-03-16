@@ -95,7 +95,7 @@ public class ByteArrayTag extends Tag {
     @Override
     public void destringify(StringifiedNBTReader in) throws IOException {
         String s = in.readUntil(true, ']');
-        String[] valueStrings = s.substring(s.indexOf(';') + 1, s.length() - 1).replaceAll(" ", "").split(",");
+        String[] valueStrings = s.substring(s.indexOf(';') + 1, s.length() - 1).replaceAll("[bB\\s]", "").split(",");
         value = new byte[valueStrings.length];
         for(int i = 0; i < value.length; i++) {
             value[i] = Byte.parseByte(valueStrings[i]);
@@ -107,6 +107,7 @@ public class ByteArrayTag extends Tag {
         StringBuilder sb = new StringBuilder("[B; ");
         for(byte b : value) {
             sb.append(b);
+            sb.append('b');
             sb.append(',');
             sb.append(' ');
         }
